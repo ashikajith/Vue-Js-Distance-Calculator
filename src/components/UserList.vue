@@ -2,8 +2,8 @@
   <div class="container">
     <div class="row padder">
         <div class="col-md-12">
-          <button @click.prevent = 'filteredUserData' class='btn btn-primary'>Users Less 100 KM</button>
-          <button @click.prevent = 'allData' class='btn btn-primary'>All Data</button>
+          <button @click.prevent = 'filteredData = !filteredData' class='btn btn-primary'>Users Less 100 KM</button>
+          <button @click.prevent = 'filteredData = !filteredData' class='btn btn-primary'>All Data</button>
           <span class="square "></span>
           <span>Users close to 100 km radius from Dublin </span>
         </div>
@@ -50,18 +50,12 @@
                 (1 - cos((lon2 - dublinLongitude) * mathPi))/2;
         return Number(earthRadius * Math.asin(Math.sqrt(distanceFactor))).toFixed(1);
       },
-      greaterThanHundred(lat2, lon2){
-        var distance = this.calculateDistance(lat2, lon2)
+      greaterThanHundred(latitude, longitude){
+        var distance = this.calculateDistance(latitude, longitude)
         if (distance < 100){
           return true;
         }
       },
-      filteredUserData(){
-        this.filteredData = true
-      },
-      allData(){
-        this.filteredData= false;
-      }
     },
     computed:{
       sortedItems(){
