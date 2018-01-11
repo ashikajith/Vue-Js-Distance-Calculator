@@ -19,7 +19,6 @@ export default {
     background: lightgreen;
     padding: 1px;
   }
-
   h1{
     color: #222;
     text-align: center;

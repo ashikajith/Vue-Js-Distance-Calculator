@@ -1,6 +1,6 @@
 <template>
   <div class="container">
-    <div class="row padder">
+    <div class="row buttonPadder">
         <div class="col-md-12">
           <button @click.prevent = 'filteredData = !filteredData' class='btn btn-primary'>Users Less 100 KM</button>
           <button @click.prevent = 'filteredData = !filteredData' class='btn btn-primary'>All Data</button>
@@ -8,7 +8,7 @@
           <span>Users close to 100 km radius from Dublin </span>
         </div>
       </div>
-      <table class="table bordered padder">
+      <table class="table userList bordered tablePadder">
         <thead>
           <th>Sl No</th>
           <th>User Id</th>
@@ -17,7 +17,7 @@
         </thead>
         <tbody v-for="(user, index) in getItemList">
           <template>
-            <tr v-bind:class="{lessThanHundred: greaterThanHundred(user.latitude, user.longitude)}">
+            <tr v-bind:class="{nearDistance: lessThanHundred(user.latitude, user.longitude)}">
               <td> {{index + 1}} </td>
               <td> {{user.user_id}} </td>
               <td> {{user.name}} </td>
@@ -35,27 +35,27 @@
     data () {
       return{
         userData: data,
-        filteredData: false
+        filteredData: false,
+        fromLatitude: 53.339428,
+        fromLongitude: -6.257664
       }
     },
     methods:{
-      calculateDistance(lat2, lon2){
-        var earthRadius = 12742;
-        var dublinLatitude = 53.339428;
-        var dublinLongitude = -6.257664;
-        var mathPi = 0.017453292519943295; // (Math.PI / 180) for converting to radians
-        var cos = Math.cos; // Cos function
-        var distanceFactor = 0.5 - cos((lat2 - dublinLatitude) * mathPi)/2 +
-                cos(dublinLatitude * mathPi) * cos(lat2 * mathPi) *
-                (1 - cos((lon2 - dublinLongitude) * mathPi))/2;
+      calculateDistance(tolat2, tolon2){
+        const earthRadius = 12742;
+        const mathPi = 0.017453292519943295; // (Math.PI / 180) for converting to radians
+        const cos = Math.cos; // Cos function
+        const distanceFactor = 0.5 - cos((tolat2 - this.fromLatitude) * mathPi)/2 +
+                cos(this.fromLatitude * mathPi) * cos(tolat2 * mathPi) *
+                (1 - cos((tolon2 - this.fromLongitude) * mathPi))/2;
         return Number(earthRadius * Math.asin(Math.sqrt(distanceFactor))).toFixed(1);
       },
-      greaterThanHundred(latitude, longitude){
+      lessThanHundred(latitude, longitude){
         var distance = this.calculateDistance(latitude, longitude)
         if (distance < 100){
           return true;
         }
-      },
+      }
     },
     computed:{
       sortedItems(){
@@ -63,7 +63,7 @@
       },
       filteredItems(){
         return this.sortedItems.filter(event => {
-          return this.greaterThanHundred(event.latitude, event.longitude);
+          return this.lessThanHundred(event.latitude, event.longitude);
         });
       },
       getItemList(){
@@ -79,16 +79,20 @@
 </script>
 
 <style scoped >
+
+  table.userList{
+    flex:1;
+  }
   span.square {
     border: solid 5px #f0f0ff;
     width: 2px;
     height: 2px;
     margin: 5px;
   }
-  .padder{
-    margin-top: 10px;
+  .buttonPadder, .tablePadder {
+    margin-top: 20px;
   }
-  .lessThanHundred{
+  .nearDistance {
     background: #f0f0ff;
   }
 </style>

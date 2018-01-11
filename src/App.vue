@@ -24,5 +24,9 @@ export default {
 </script>
 
 <style>
-
+.container {
+  display: flex;
+  min-height: 100vh;
+  flex-direction: column;
+}
 </style>

@@ -15,12 +15,10 @@ export default {
 </script>
 
 <style scoped>
-  footer{
+  footer {
     background: #333;
     padding: 3px;
+    color: white;
+    text-align: center;
   }
-p{
-  color: white;
-  text-align: center;
-}
 </style>
