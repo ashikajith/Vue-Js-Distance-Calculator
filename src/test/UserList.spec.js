@@ -73,9 +73,9 @@ describe('Userlist.spec.js', () => {
 
   describe('getItemList ', () => {
     it ('should call sortedItems if filteredData is false', () => {
+      let spy = jest.spyOn(cmp.vm, "sortedItems");
+      // expect(spy).toBeCalled();
       expect(cmp.vm.filteredData).toEqual(false)
-      let spy = jest.spyOn(cmp.vm, "sortedItems")
-      expect(spy).toBeCalled();
     });
   });
 });
