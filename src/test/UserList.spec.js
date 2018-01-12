@@ -57,10 +57,16 @@ describe('Userlist.spec.js', () => {
   describe('sortedItems() computed method', () => {
     it ('should returns userData object', () => {
       expect(typeof(vm.sortedItems)).toEqual('object');
-    })
+    });
 
     it ('should returns total array elements', () => {
       expect(vm.sortedItems.length).toEqual(3);
-    })
-  })
+    });
+  });
+
+  describe('filteredItems() computed method', () => {
+    it ('should returns userData object', () => {
+      expect(typeof(vm.filteredItems)).toEqual('object');
+    });
+  });
 });
