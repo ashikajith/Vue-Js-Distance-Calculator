@@ -36,8 +36,8 @@
       return{
         userData: data,
         filteredData: false,
-        fromLatitude: 53.339428,
-        fromLongitude: -6.257664
+        fromLatitude: 53.339428, // Dublin Latitude
+        fromLongitude: -6.257664 // Dublin Longitude
       }
     },
     methods:{
@@ -48,12 +48,15 @@
         const distanceFactor = 0.5 - cos((tolat2 - this.fromLatitude) * mathPi)/2 +
                 cos(this.fromLatitude * mathPi) * cos(tolat2 * mathPi) *
                 (1 - cos((tolon2 - this.fromLongitude) * mathPi))/2;
-        return Number(earthRadius * Math.asin(Math.sqrt(distanceFactor))).toFixed(1);
+        return parseFloat(Number(earthRadius * Math.asin(Math.sqrt(distanceFactor))).toFixed(1));
       },
       lessThanHundred(latitude, longitude){
         var distance = this.calculateDistance(latitude, longitude)
         if (distance < 100){
           return true;
+        }
+        else {
+          return false;
         }
       }
     },
